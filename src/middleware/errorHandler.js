@@ -1,10 +1,15 @@
+import createHttpError from 'http-errors';
+
 export const errorHandler = (err, req, res, next) => {
   console.error('Error handler:', err);
 
-  const status = err.status || 500;
-  const message = err.message || 'Internal server error';
+  if (err instanceof createHttpError.HttpError) {
+    return res.status(err.status).json({
+      message: err.message,
+    });
+  }
 
-  res.status(status).json({
-    message,
+  res.status(500).json({
+    message: 'Internal server error',
   });
 };
