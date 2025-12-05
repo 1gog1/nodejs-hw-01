@@ -1,5 +1,4 @@
-import Joi from 'joi';
-
+import { Joi, Segments } from 'celebrate';
 export const registerUserSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
