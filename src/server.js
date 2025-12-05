@@ -10,6 +10,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import userRouter from './routes/userRoutes.js';
 
 import authRouter from './routes/authRoutes.js';
 import notesRouter from './routes/notesRoutes.js';
@@ -27,6 +28,7 @@ const startServer = async () => {
 
     app.use('/auth', authRouter);
     app.use('/notes', notesRouter);
+    app.use('/users', userRouter);
 
     app.use(notFoundHandler);
     app.use(celebrateErrors());
