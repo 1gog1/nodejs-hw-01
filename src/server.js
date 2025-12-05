@@ -13,7 +13,6 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 import authRouter from './routes/authRoutes.js';
 import notesRouter from './routes/notesRoutes.js';
-import { authenticate } from './middleware/authenticate.js';
 
 const app = express();
 
@@ -26,14 +25,11 @@ const startServer = async () => {
     app.use(express.json());
     app.use(cookieParser());
 
-    app.use('/auth', authRouter);
-
-    app.use('/notes', authenticate, notesRouter);
+    app.use(authRouter);
+    app.use(notesRouter);
 
     app.use(notFoundHandler);
-
     app.use(celebrateErrors());
-
     app.use(errorHandler);
 
     const { PORT = 3000 } = process.env;

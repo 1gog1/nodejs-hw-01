@@ -1,10 +1,13 @@
 import { Router } from 'express';
+import { celebrate } from 'celebrate';
+
 import {
   registerUser,
   loginUser,
   refreshUserSession,
   logoutUser,
 } from '../controllers/authController.js';
+
 import {
   registerUserSchema,
   loginUserSchema,
@@ -12,8 +15,8 @@ import {
 
 const router = Router();
 
-router.post('/register', registerUserSchema, registerUser);
-router.post('/login', loginUserSchema, loginUser);
+router.post('/register', celebrate({ body: registerUserSchema }), registerUser);
+router.post('/login', celebrate({ body: loginUserSchema }), loginUser);
 router.post('/refresh', refreshUserSession);
 router.post('/logout', logoutUser);
 
