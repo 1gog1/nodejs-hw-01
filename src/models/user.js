@@ -29,7 +29,7 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
-userSchema.pre('save', async function () {
+userSchema.pre('save', function () {
   if (!this.username) {
     this.username = this.email;
   }
