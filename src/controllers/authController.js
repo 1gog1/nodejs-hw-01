@@ -114,12 +114,14 @@ export const requestResetEmail = async (req, res, next) => {
     const compiled = handlebars.compile(source);
 
     const resetLink = `${process.env.FRONTEND_DOMAIN}/reset-password?token=${token}`;
+
     const html = compiled({
-      username: user.email,
+      username: user.username,
       resetLink,
     });
 
     await sendEmail({
+      from: process.env.SMTP_FROM,
       to: user.email,
       subject: 'Reset your password',
       html,
@@ -129,7 +131,6 @@ export const requestResetEmail = async (req, res, next) => {
       message: 'Password reset email sent successfully',
     });
   } catch (error) {
-    console.error(error);
     next(
       createHttpError(500, 'Failed to send the email, please try again later.'),
     );
